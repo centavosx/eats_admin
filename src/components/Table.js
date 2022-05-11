@@ -50,7 +50,9 @@ export const Table = (props) => {
                             <b>
                               {key === 'price' ? (
                                 'Php' + data[1][key]
-                              ) : key === 'link' ? (
+                              ) : key === 'link' ||
+                                key === 'img' ||
+                                key === 'receipt' ? (
                                 <img
                                   src={data[1][key]}
                                   style={{ width: '200px', height: '100px' }}
@@ -59,13 +61,80 @@ export const Table = (props) => {
                                 data[1][key]
                               )}
                             </b>
-                          ) : key === 'price' ? (
-                            'Php' + data[1][key]
-                          ) : key === 'link' ? (
+                          ) : key.toLowerCase().includes('price') ? (
+                            'Php' + data[1][key]?.toFixed(2)
+                          ) : key === 'link' ||
+                            key === 'img' ||
+                            key === 'receipt' ? (
                             <img
                               src={data[1][key]}
                               style={{ width: '200px', height: '80px' }}
                             />
+                          ) : key.toLowerCase().includes('date') ? (
+                            <>
+                              {new Date(data[1][key]).toDateString()}{' '}
+                              {new Date(data[1][key]).toLocaleTimeString()}
+                            </>
+                          ) : key === 'status' ? (
+                            <select
+                              onChange={(e) =>
+                                e.target.value !== data[1].status
+                                  ? props.changeStatus([data, e.target.value])
+                                  : null
+                              }
+                            >
+                              <option
+                                value="Pending"
+                                selected={data[1].status === 'Pending'}
+                              >
+                                Pending
+                              </option>
+                              <option
+                                value="Processing"
+                                selected={data[1].status === 'Processing'}
+                              >
+                                Processing
+                              </option>
+                              <option
+                                value="Delivering"
+                                selected={data[1].status === 'Delivering'}
+                              >
+                                Delivering
+                              </option>
+                              <option
+                                value="Completed"
+                                selected={data[1].status === 'Completed'}
+                              >
+                                Completed
+                              </option>
+                              <option
+                                value="Cancelled"
+                                selected={data[1].status === 'Cancelled'}
+                              >
+                                Cancelled
+                              </option>
+                            </select>
+                          ) : key === 'pstatus' ? (
+                            <select
+                              onChange={(e) =>
+                                e.target.value !== data[1].pstatus
+                                  ? props.changePStatus([data, e.target.value])
+                                  : null
+                              }
+                            >
+                              <option
+                                value="Paid"
+                                selected={data[1].pstatus === 'Paid'}
+                              >
+                                Paid
+                              </option>
+                              <option
+                                value="Not Paid"
+                                selected={data[1].pstatus === 'Not Paid'}
+                              >
+                                Not Paid
+                              </option>
+                            </select>
                           ) : key === 'discount' ? (
                             (data[1]['discount'] ?? 0) + '%'
                           ) : key === 'adv' ? (
@@ -91,6 +160,19 @@ export const Table = (props) => {
                     <td>
                       <center>
                         <div style={{ display: 'block' }}>
+                          {props.showItem ? (
+                            <p
+                              style={{
+                                marginRight: '10px',
+                                color: 'blue',
+                                cursor: 'pointer',
+                                textDecoration: 'underline',
+                              }}
+                              onClick={() => props.showItem(data)}
+                            >
+                              Show items
+                            </p>
+                          ) : null}
                           {props.edit ? (
                             <p
                               style={{

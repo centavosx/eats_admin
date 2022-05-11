@@ -16,8 +16,16 @@ const months = {
   11: 'December',
 }
 
-const Content = (props) => <div className="content">{props.children}</div>
-export const Row = (props) => <div className="row">{props.children}</div>
+const Content = (props) => (
+  <div className="content" style={props.style}>
+    {props.children}
+  </div>
+)
+export const Row = (props) => (
+  <div className="row" style={props.style}>
+    {props.children}
+  </div>
+)
 export const CardNum = (props) => {
   return (
     <div className="col-lg-3 col-md-6 col-sm-6">

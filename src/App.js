@@ -8,7 +8,9 @@ import Dashboard from './pages/Dashboard'
 import React, { useState } from 'react'
 import Login from './pages/Login'
 import Inventories from './pages/Inventory'
+import Feedbacks from './pages/Feedbacks'
 import Chat from './pages/Chat'
+import Transactions from './pages/Transactions'
 function App() {
   const loggedin = useSelector((state) => state.user.login)
   const [loginn, setLogin] = useState(null)
@@ -27,6 +29,8 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/inventories" element={<Inventories />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/feedbacks" element={<Feedbacks />} />
+          <Route path="/transactions" element={<Transactions />} />
         </Routes>
       </Router>
     </div>

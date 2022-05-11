@@ -385,6 +385,7 @@ const Inventories = () => {
               'Discount',
               'Description',
               'Quantity',
+              'Critical Amount',
               'Supplier',
               'Category',
               'Actions',
@@ -398,6 +399,7 @@ const Inventories = () => {
               'discount',
               'description',
               'numberofitems',
+              'critical',
               'seller',
               'type',
             ]}
@@ -645,7 +647,14 @@ const EditProduct = (props) => {
             <Row>
               <div className="col-md-12">
                 <label>Category</label>
-                <select style={{ width: '100%' }}>
+                <select
+                  style={{ width: '100%' }}
+                  onChange={(e) =>
+                    e.target.value !== null && e.target.value !== 'null'
+                      ? changeValue('type', e.target.value)
+                      : null
+                  }
+                >
                   <option value={null} selected={data[1].type === null}>
                     Select Category
                   </option>
@@ -664,7 +673,14 @@ const EditProduct = (props) => {
             <Row>
               <div className="col-md-12">
                 <label>Supplier</label>
-                <select style={{ width: '100%' }}>
+                <select
+                  style={{ width: '100%' }}
+                  onChange={(e) =>
+                    e.target.value !== null && e.target.value !== 'null'
+                      ? changeValue('seller', e.target.value)
+                      : null
+                  }
+                >
                   <option value={null} selected={data[1].seller === null}>
                     Select Supplier
                   </option>

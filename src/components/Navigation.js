@@ -1,8 +1,22 @@
+import axios from 'axios'
 import React, { useLayoutEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import socket from '../socket'
 
 export const LeftNavigation = (props) => {
+  const [num, setNum] = useState(0)
+
   const location = useLocation()
+  React.useEffect(() => {
+    getUnreadNum()
+    socket.on('totalUnread', (data) => {
+      setNum(data)
+    })
+  }, [])
+  const getUnreadNum = async () => {
+    const resp = await axios.get(process.env.REACT_APP_API)
+    setNum(resp.data.data)
+  }
   return (
     <div className="sidebar" data-color="black" data-active-color="success">
       <div className="logo">
@@ -50,13 +64,15 @@ export const LeftNavigation = (props) => {
           <li className={location.pathname == '/chat' ? 'active' : ''}>
             <Link to="/chat">
               <i className="nc-icon nc-chat-33"></i>
-              <p>Chat</p>
+              <p>
+                Chat <b style={{ color: 'red' }}>{num > 0 ? num : null}</b>
+              </p>
             </Link>
           </li>
           <li className={location.pathname == '/orders' ? 'active' : ''}>
-            <Link to="/orders">
+            <Link to="/transactions">
               <i className="nc-icon nc-single-copy-04"></i>
-              <p>Orders</p>
+              <p>Transactions</p>
             </Link>
           </li>
           <li className={location.pathname == '/inventories' ? 'active' : ''}>

@@ -29,39 +29,39 @@ export const LeftNavigation = (props) => {
               <p>Dashboard</p>
             </Link>
           </li>
+          <li className={location.pathname == '/payment' ? 'active' : ''}>
+            <Link to="/payment">
+              <i className="nc-icon nc-credit-card"></i>
+              <p>Payment</p>
+            </Link>
+          </li>
           <li className={location.pathname == '/users' ? 'active' : ''}>
             <Link to="/users">
-              <i className="nc-icon nc-diamond"></i>
+              <i className="nc-icon nc-single-02"></i>
               <p>Users</p>
             </Link>
           </li>
           <li className={location.pathname == '/feedbacks' ? 'active' : ''}>
             <Link to="/feedbacks">
-              <i className="nc-icon nc-pin-3"></i>
+              <i className="nc-icon nc-email-85"></i>
               <p>Feedbacks</p>
             </Link>
           </li>
           <li className={location.pathname == '/chat' ? 'active' : ''}>
             <Link to="/chat">
-              <i className="nc-icon nc-bell-55"></i>
+              <i className="nc-icon nc-chat-33"></i>
               <p>Chat</p>
             </Link>
           </li>
           <li className={location.pathname == '/orders' ? 'active' : ''}>
             <Link to="/orders">
-              <i className="nc-icon nc-single-02"></i>
+              <i className="nc-icon nc-single-copy-04"></i>
               <p>Orders</p>
-            </Link>
-          </li>
-          <li className={location.pathname == '/advance' ? 'active' : ''}>
-            <Link to="/advance">
-              <i className="nc-icon nc-tile-56"></i>
-              <p>Advance Orders</p>
             </Link>
           </li>
           <li className={location.pathname == '/inventories' ? 'active' : ''}>
             <Link to="/inventories">
-              <i className="nc-icon nc-caps-small"></i>
+              <i className="nc-icon nc-app"></i>
               <p>Inventories</p>
             </Link>
           </li>

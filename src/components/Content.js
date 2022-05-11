@@ -101,7 +101,7 @@ export const Graph = () => {
       setShow(false)
       try {
         const resp = await axios.get(
-          process.env.REACT_APP_LOCAL + 'weeklyTransaction',
+          process.env.REACT_APP_API + 'weeklyTransaction',
           {
             params: {
               date: new Date().toString(),
@@ -150,7 +150,7 @@ export const Graph = () => {
       switch (what) {
         case 'Daily Track':
           const resp = await axios.get(
-            process.env.REACT_APP_LOCAL + 'weeklyTransaction',
+            process.env.REACT_APP_API + 'weeklyTransaction',
             {
               params: {
                 what: 'TODAY',
@@ -163,7 +163,7 @@ export const Graph = () => {
 
         case 'Weekly Track':
           const weekresp = await axios.get(
-            process.env.REACT_APP_LOCAL + 'weeklyTransaction',
+            process.env.REACT_APP_API + 'weeklyTransaction',
             {
               params: {
                 date: new Date(value).toISOString(),
@@ -175,7 +175,7 @@ export const Graph = () => {
           break
         case 'Monthly Track':
           const monthresp = await axios.get(
-            process.env.REACT_APP_LOCAL + 'monthlyTransaction',
+            process.env.REACT_APP_API + 'monthlyTransaction',
             {
               params: {
                 month: month,
@@ -188,7 +188,7 @@ export const Graph = () => {
           break
         case 'Yearly Track':
           const yearlyresp = await axios.get(
-            process.env.REACT_APP_LOCAL + 'yearlyTransaction',
+            process.env.REACT_APP_API + 'yearlyTransaction',
             {
               params: {
                 year: year,
@@ -341,6 +341,7 @@ export const FormInput = (props) => {
     <div className="col-md-12">
       <label>{props.label}</label>
       <input
+        id={props.id}
         type={props.type}
         className="form-control"
         placeHolder={props.placeHolder}

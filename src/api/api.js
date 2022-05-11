@@ -4,7 +4,7 @@ export const checkLogin = async (user, pw) => {
   try {
     console.log(user, pw)
     const resp = await axios.post(
-      process.env.REACT_APP_LOCAL + 'login',
+      process.env.REACT_APP_API + 'login',
       encryptJSON({
         user: user,
         pass: pw,

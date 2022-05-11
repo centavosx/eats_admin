@@ -6,13 +6,13 @@ const Login = (props) => {
   const [user, setUser] = useState('')
   const [pw, setPw] = useState('')
   const resetLogin = async () => {
-    await axios.get(process.env.REACT_APP_LOCAL + 'resetpass')
+    await axios.get(process.env.REACT_APP_API + 'resetpass')
     alert('Password has been resetted!')
   }
   const login = async (e) => {
     e.preventDefault()
     const resp = await axios.post(
-      process.env.REACT_APP_LOCAL + 'login',
+      process.env.REACT_APP_API + 'login',
       encryptJSON({
         user: encrypt(user),
         pass: encrypt(pw),

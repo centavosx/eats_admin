@@ -25,6 +25,7 @@ const Dashboard = (props) => {
     getFeedbacksNumber()
     getTopUsers()
     getCriticalProducts()
+
     socket.on('numberofadvance', (data) => {
       setAdvnum(Number(data))
     })
@@ -48,7 +49,7 @@ const Dashboard = (props) => {
   const getNumberOfTrans = async () => {
     try {
       const resp = await axios.get(
-        process.env.REACT_APP_LOCAL + 'numberoftransactions'
+        process.env.REACT_APP_API + 'numberoftransactions'
       )
       setTransnum(resp.data.num)
     } catch {
@@ -58,7 +59,7 @@ const Dashboard = (props) => {
   const getNumberOfAdv = async () => {
     try {
       const resp = await axios.get(
-        process.env.REACT_APP_LOCAL + 'numberofadvance'
+        process.env.REACT_APP_API + 'numberofadvance'
       )
       setAdvnum(resp.data.num)
     } catch {
@@ -68,7 +69,7 @@ const Dashboard = (props) => {
   const getUsers = async () => {
     try {
       const resp = await axios.get(
-        process.env.REACT_APP_LOCAL + 'countRegistered'
+        process.env.REACT_APP_API + 'countRegistered'
       )
       setTotalUsers(resp.data.num)
     } catch {
@@ -77,7 +78,7 @@ const Dashboard = (props) => {
   }
   const getProducts = async () => {
     try {
-      const resp = await axios.get(process.env.REACT_APP_LOCAL + 'getAllprods')
+      const resp = await axios.get(process.env.REACT_APP_API + 'getAllprods')
       setProducts(resp.data)
     } catch {
       setProducts([])
@@ -85,9 +86,7 @@ const Dashboard = (props) => {
   }
   const getFeedbacksNumber = async () => {
     try {
-      const resp = await axios.get(
-        process.env.REACT_APP_LOCAL + 'feedbacknumber'
-      )
+      const resp = await axios.get(process.env.REACT_APP_API + 'feedbacknumber')
       setFeedBackNum(resp.data.num)
     } catch {
       setFeedBackNum(0)
@@ -95,7 +94,7 @@ const Dashboard = (props) => {
   }
   const getTopUsers = async () => {
     try {
-      const resp = await axios.get(process.env.REACT_APP_LOCAL + 'getTopBuyer')
+      const resp = await axios.get(process.env.REACT_APP_API + 'getTopBuyer')
       let x = []
       for (let v in resp.data) {
         if (v > 9) {
@@ -123,7 +122,7 @@ const Dashboard = (props) => {
   const getCriticalProducts = async () => {
     try {
       const resp = await axios.get(
-        process.env.REACT_APP_LOCAL + 'getCriticalProducts'
+        process.env.REACT_APP_API + 'getCriticalProducts'
       )
       setCritical(resp.data)
     } catch {

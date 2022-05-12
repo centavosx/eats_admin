@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useLayoutEffect, useRef, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import socket from '../socket'
-
+import './style.css'
 export const LeftNavigation = (props) => {
   const [num, setNum] = useState(0)
 
@@ -18,7 +18,11 @@ export const LeftNavigation = (props) => {
     setNum(resp.data.data)
   }
   return (
-    <div className="sidebar" data-color="black" data-active-color="success">
+    <div
+      className={props.openNav ? 'left sidebar' : 'sidebar'}
+      data-color="black"
+      data-active-color="success"
+    >
       <div className="logo">
         <a
           href="http://eats-onlineph.herokuapp.com"
@@ -101,21 +105,23 @@ export const LeftNavigation = (props) => {
   )
 }
 
-export const TopNav = () => {
+export const TopNav = (props) => {
   return (
     <nav className="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
       <div className="container-fluid">
         <div className="navbar-wrapper">
           <div className="navbar-toggle">
-            <button type="button" className="navbar-toggler">
+            <button
+              type="button"
+              className="navbar-toggler"
+              onClick={() => props.openNav()}
+            >
               <span className="navbar-toggler-bar bar1"></span>
               <span className="navbar-toggler-bar bar2"></span>
               <span className="navbar-toggler-bar bar3"></span>
             </button>
           </div>
-          <a className="navbar-brand" href="javascript:;">
-            Paper Dashboard 2
-          </a>
+          <a className="navbar-brand">EATS ONLINE</a>
         </div>
         <button
           className="navbar-toggler"

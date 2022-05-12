@@ -10,9 +10,11 @@ import Login from './pages/Login'
 import Inventories from './pages/Inventory'
 import Feedbacks from './pages/Feedbacks'
 import Chat from './pages/Chat'
+import Users from './pages/Users'
 import Transactions from './pages/Transactions'
 function App() {
   const loggedin = useSelector((state) => state.user.login)
+  const [openNav, setOpenNav] = useState(false)
   const [loginn, setLogin] = useState(null)
   React.useEffect(() => {
     const fetchData = async () => {
@@ -23,15 +25,18 @@ function App() {
   return loginn ? (
     <div class="wrapper ">
       <Router>
-        <LeftNavigation />
-        <TopNav />
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/inventories" element={<Inventories />} />
-          <Route path="/chat" element={<Chat />} />
-          <Route path="/feedbacks" element={<Feedbacks />} />
-          <Route path="/transactions" element={<Transactions />} />
-        </Routes>
+        <LeftNavigation openNav={openNav} />
+        <TopNav openNav={() => setOpenNav(true)} />
+        <div onClick={() => setOpenNav(false)}>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/inventories" element={<Inventories />} />
+            <Route path="/chat" element={<Chat />} />
+            <Route path="/feedbacks" element={<Feedbacks />} />
+            <Route path="/transactions" element={<Transactions />} />
+            <Route path="/users" element={<Users />} />
+          </Routes>
+        </div>
       </Router>
     </div>
   ) : loginn === false ? (

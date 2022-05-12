@@ -5,7 +5,7 @@
   -webkit-font-smoothing: antialiased;
 }
 
-body {
+.login-body {
   background: #e35869;
   font-family: 'Rubik', sans-serif;
 }

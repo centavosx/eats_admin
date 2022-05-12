@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Content, { Row, FormInput } from '../components/Content'
 import { Table } from '../components/Table'
 import { encryptJSON } from '../encryption'
+
 import socket from '../socket'
 
 const Inventories = () => {
@@ -22,7 +23,7 @@ const Inventories = () => {
   const [editProd, setEditProd] = useState([false, null])
   const [categoryN, setCategoryN] = useState('')
   const [supplierN, setSupplierN] = useState('')
-
+  const [dataToExport, setDataToExport] = useState([])
   const addSupplierOrCateg = async (what, data, val) => {
     await axios.post(process.env.REACT_APP_API + 'addsupplierorcategory', {
       wh: what,
@@ -61,6 +62,24 @@ const Inventories = () => {
       return '0'
     }
   }
+  React.useEffect(() => {
+    if (products.length > 0)
+      setDataToExport(
+        products.map((x) => {
+          return {
+            id: x[1].id,
+            title: x[1].title.replaceAll(',', ' '),
+            price: x[1].price,
+            discount: x[1].discount,
+            description: x[1].description.replaceAll(',', ' '),
+            qty: x[1].numberofitems,
+            critical: x[1].critical,
+            seller: x[1].seller,
+            categ: x[1].type,
+          }
+        })
+      )
+  }, [products])
   const RemoveComma = (v) => {
     let g = v.toString().split(',')
     return g.join('')
@@ -377,6 +396,33 @@ const Inventories = () => {
           )}
           <Table
             size="col-md-9"
+            csv={{
+              headers: [
+                'Id',
+                'Name',
+                'Price',
+                'Discount',
+                'Description',
+                'Quantity',
+                'Critical Amount',
+                'Supplier',
+                'Category',
+              ],
+              keyVals: [
+                'id',
+                'title',
+                'price',
+                'discount',
+                'description',
+                'qty',
+                'critical',
+                'seller',
+                'categ',
+              ],
+              data: dataToExport,
+
+              fileName: 'Inventories',
+            }}
             headers={[
               'Id',
               'Name',

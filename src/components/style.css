@@ -2,3 +2,11 @@
   transform: rotate(90deg);
   transform-origin: left top 0;
 }
+.left {
+  left: 260px;
+}
+@media screen and (min-width: 990px) {
+  .left {
+    left: 0px;
+  }
+}

@@ -28,7 +28,7 @@ const Login = (props) => {
     <div className="login-body">
       <div className="login-form">
         <form onSubmit={(e) => login(e)}>
-          <h1>Login</h1>
+          <h1>EATS ONLINE ADMIN LOGIN</h1>
           <div className="content">
             <div className="input-field">
               <input

@@ -61,10 +61,39 @@ const PaymentWhat = (props) => {
       reader.readAsDataURL(file)
     }
   }
+  const Reset = () => {
+    setImage(null)
+    setImgurl(null)
+    setAccountHolder('')
+    setAccountNumber('')
+    setBank('')
+  }
+  const update = async (e) => {
+    e.preventDefault()
+    let obj = {
+      holder: accountHolder.length > 0 ? accountHolder : props.accountHolder,
+      number: accountNumber.length > 0 ? accountNumber : props.accountNumber,
+    }
+    if (props.isBank) obj.bank = bank.length > 0 ? bank : props.bank
+    if (image === null) {
+      await axios.patch(process.env.REACT_APP_API + 'updateQRdata', {
+        what: props.isBank ? 'bank' : 'gcash',
+        updates: obj,
+      })
+      return Reset()
+    }
+    const form = new FormData()
+    form.append('image', image)
+    form.append('set', JSON.stringify(obj))
+    form.append('imagename', image.name)
+    form.append('what', props.isBank ? 'bank' : 'gcash')
 
-  const update = async () => {
-    await axios.patch(process.env.REACT_APP_API + 'updateQRdata')
-    await axios.patch(process.env.REACT_APP_API + 'updateQRcode')
+    await axios.patch(process.env.REACT_APP_API + 'updateQRcode', form, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    return Reset()
   }
   return (
     <div className="col-md-6">
@@ -73,7 +102,7 @@ const PaymentWhat = (props) => {
           <h5 className="card-title">{props.title}</h5>
         </div>
         <div className="card-body">
-          <form>
+          <form onSubmit={(e) => update(e)}>
             <Row>
               <FormInput
                 type="text"
@@ -127,7 +156,7 @@ const PaymentWhat = (props) => {
             <Row>
               <div className="update ml-auto mr-auto">
                 <button type="submit" className="btn btn-primary btn-round">
-                  Update Profile
+                  Update
                 </button>
               </div>
             </Row>

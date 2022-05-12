@@ -42,31 +42,31 @@ export const LeftNavigation = (props) => {
       <div className="sidebar-wrapper">
         <ul className="nav">
           <li className={location.pathname == '/' ? 'active' : ''}>
-            <Link to="/">
+            <Link to="/" onClick={() => props.setOpenNav()}>
               <i className="nc-icon nc-bank"></i>
               <p>Dashboard</p>
             </Link>
           </li>
           <li className={location.pathname == '/payment' ? 'active' : ''}>
-            <Link to="/payment">
+            <Link to="/payment" onClick={() => props.setOpenNav()}>
               <i className="nc-icon nc-credit-card"></i>
               <p>Payment</p>
             </Link>
           </li>
           <li className={location.pathname == '/users' ? 'active' : ''}>
-            <Link to="/users">
+            <Link to="/users" onClick={() => props.setOpenNav()}>
               <i className="nc-icon nc-single-02"></i>
               <p>Users</p>
             </Link>
           </li>
           <li className={location.pathname == '/feedbacks' ? 'active' : ''}>
-            <Link to="/feedbacks">
+            <Link to="/feedbacks" onClick={() => props.setOpenNav()}>
               <i className="nc-icon nc-email-85"></i>
               <p>Feedbacks</p>
             </Link>
           </li>
           <li className={location.pathname == '/chat' ? 'active' : ''}>
-            <Link to="/chat">
+            <Link to="/chat" onClick={() => props.setOpenNav()}>
               <i className="nc-icon nc-chat-33"></i>
               <p>
                 Chat <b style={{ color: 'red' }}>{num > 0 ? num : null}</b>
@@ -74,13 +74,13 @@ export const LeftNavigation = (props) => {
             </Link>
           </li>
           <li className={location.pathname == '/orders' ? 'active' : ''}>
-            <Link to="/transactions">
+            <Link to="/transactions" onClick={() => props.setOpenNav()}>
               <i className="nc-icon nc-single-copy-04"></i>
               <p>Transactions</p>
             </Link>
           </li>
           <li className={location.pathname == '/inventories' ? 'active' : ''}>
-            <Link to="/inventories">
+            <Link to="/inventories" onClick={() => props.setOpenNav()}>
               <i className="nc-icon nc-app"></i>
               <p>Inventories</p>
             </Link>
@@ -106,6 +106,19 @@ export const LeftNavigation = (props) => {
 }
 
 export const TopNav = (props) => {
+  const [notif, setNotif] = useState([])
+  React.useEffect(() => {
+    getCritical()
+    socket.on('criticalproducts', (data) => {
+      setNotif(data)
+    })
+  }, [])
+  const getCritical = async () => {
+    const resp = await axios.get(
+      process.env.REACT_APP_API + 'getCriticalProducts'
+    )
+    setNotif(resp.data)
+  }
   return (
     <nav className="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
       <div className="container-fluid">
@@ -140,30 +153,7 @@ export const TopNav = (props) => {
           className="collapse navbar-collapse justify-content-end"
           id="navigation"
         >
-          <form>
-            <div className="input-group no-border">
-              <input
-                type="text"
-                value=""
-                className="form-control"
-                placeholder="Search..."
-              />
-              <div className="input-group-append">
-                <div className="input-group-text">
-                  <i className="nc-icon nc-zoom-split"></i>
-                </div>
-              </div>
-            </div>
-          </form>
           <ul className="navbar-nav">
-            <li className="nav-item">
-              <a className="nav-link btn-magnify" href="javascript:;">
-                <i className="nc-icon nc-layout-11"></i>
-                <p>
-                  <span className="d-lg-none d-md-block">Stats</span>
-                </p>
-              </a>
-            </li>
             <li className="nav-item btn-rotate dropdown">
               <a
                 className="nav-link dropdown-toggle"
@@ -174,32 +164,24 @@ export const TopNav = (props) => {
                 aria-expanded="false"
               >
                 <i className="nc-icon nc-bell-55"></i>
+                <span style={{ marginRight: '5px', color: 'red' }}>
+                  {' '}
+                  {notif.length > 0 ? notif.length : null}
+                </span>
                 <p>
-                  <span className="d-lg-none d-md-block">Some Actions</span>
+                  <span className="d-lg-none d-md-block">Notifications</span>
                 </p>
               </a>
               <div
                 className="dropdown-menu dropdown-menu-right"
                 aria-labelledby="navbarDropdownMenuLink"
               >
-                <a className="dropdown-item" href="#">
-                  Action
-                </a>
-                <a className="dropdown-item" href="#">
-                  Another action
-                </a>
-                <a className="dropdown-item" href="#">
-                  Something else here
-                </a>
+                {notif.map((data) => (
+                  <a className="dropdown-item" href="#">
+                    {data.title} {data.numberofitems} items left
+                  </a>
+                ))}
               </div>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link btn-rotate" href="javascript:;">
-                <i className="nc-icon nc-settings-gear-65"></i>
-                <p>
-                  <span className="d-lg-none d-md-block">Account</span>
-                </p>
-              </a>
             </li>
           </ul>
         </div>

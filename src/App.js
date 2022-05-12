@@ -12,6 +12,7 @@ import Feedbacks from './pages/Feedbacks'
 import Chat from './pages/Chat'
 import Users from './pages/Users'
 import Transactions from './pages/Transactions'
+import Payment from './pages/Payment'
 function App() {
   const loggedin = useSelector((state) => state.user.login)
   const [openNav, setOpenNav] = useState(false)
@@ -25,7 +26,10 @@ function App() {
   return loginn ? (
     <div class="wrapper ">
       <Router>
-        <LeftNavigation openNav={openNav} />
+        <LeftNavigation
+          openNav={openNav}
+          setOpenNav={() => setOpenNav(false)}
+        />
         <TopNav openNav={() => setOpenNav(true)} />
         <div onClick={() => setOpenNav(false)}>
           <Routes>
@@ -35,6 +39,7 @@ function App() {
             <Route path="/feedbacks" element={<Feedbacks />} />
             <Route path="/transactions" element={<Transactions />} />
             <Route path="/users" element={<Users />} />
+            <Route path="/payment" element={<Payment />} />
           </Routes>
         </div>
       </Router>

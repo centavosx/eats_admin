@@ -77,7 +77,6 @@ const RowTransaction = (props) => {
       })
       return
     } catch (e) {
-      console.log(e)
       return
     }
   }

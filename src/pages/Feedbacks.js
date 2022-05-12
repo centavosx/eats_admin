@@ -173,7 +173,7 @@ const Reviews = () => {
   }, [])
   const getReviews = async () => {
     const resp = await axios.get(process.env.REACT_APP_API + 'getReviews')
-    console.log(resp.data)
+
     setData(resp.data)
   }
   return (

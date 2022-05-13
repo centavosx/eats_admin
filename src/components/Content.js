@@ -79,18 +79,28 @@ const Bar = (props) => {
       {show ? (
         <div
           style={{
-            top: '180px',
+            top: '140px',
             position: 'absolute',
-            height: '70px',
-            width: '110px',
+            height: 'auto',
+            width: '200px',
             backgroundColor: 'white',
             border: '1px solid black',
             borderRadius: '5px',
-            marginLeft: '-20px',
+            marginLeft: '-65px',
           }}
         >
           Amount: <br />
-          Php{props.price.toFixed(2)}
+          <b>Php{props.price.toFixed(2)}</b> <br />
+          <br />
+          Products
+          <div style={{ marginTop: '5px', height: '120px', overflow: 'auto' }}>
+            {props.products.map((data, i) => (
+              <span>
+                {i + 1}. {data.title} <b>{data.amount} items</b>
+                <br />
+              </span>
+            ))}
+          </div>
         </div>
       ) : null}
     </div>
@@ -178,6 +188,7 @@ export const Graph = () => {
               },
             }
           )
+
           setGraphObject(weekresp.data.data)
           setOverall(weekresp.data.overall)
           break
@@ -191,6 +202,7 @@ export const Graph = () => {
               },
             }
           )
+
           setGraphObject(monthresp.data.data)
           setOverall(monthresp.data.overall)
           break
@@ -203,6 +215,7 @@ export const Graph = () => {
               },
             }
           )
+
           setGraphObject(yearlyresp.data.data)
           setOverall(yearlyresp.data.overall)
           break
@@ -298,6 +311,7 @@ export const Graph = () => {
                       ? graphObject[data].percentage
                       : 0
                   }
+                  products={graphObject[data].products}
                   price={graphObject[data].total}
                   name={graphObject[data].day}
                 />

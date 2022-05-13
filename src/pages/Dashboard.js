@@ -13,6 +13,7 @@ const Dashboard = (props) => {
   const [feedBackNum, setFeedBackNum] = useState(0)
   const [topUsers, setTopUsers] = useState([])
   const [critical, setCritical] = useState([])
+  const [fastMoving, setFastMoving] = useState([])
   const [users, setUsers] = useState([])
   React.useEffect(() => {
     setTotalNum(transnum + advancenum)
@@ -25,7 +26,7 @@ const Dashboard = (props) => {
     getFeedbacksNumber()
     getTopUsers()
     getCriticalProducts()
-
+    getProductSold('month', true, [null])
     socket.on('numberofadvance', (data) => {
       setAdvnum(Number(data))
     })
@@ -91,6 +92,23 @@ const Dashboard = (props) => {
     } catch {
       setFeedBackNum(0)
     }
+  }
+  const getProductSold = async (what, auto, value) => {
+    try {
+      const obj = {
+        what,
+        auto,
+        value: value[0],
+      }
+      if (value.length > 1) obj.value2 = value[1]
+      const resp = await axios.get(
+        process.env.REACT_APP_API + 'getFastMovingProducts',
+        {
+          params: obj,
+        }
+      )
+      setFastMoving(resp.data.products)
+    } catch {}
   }
   const getTopUsers = async () => {
     try {
@@ -179,7 +197,7 @@ const Dashboard = (props) => {
         </Row>
         <Row>
           <Rankings
-            title="Products"
+            title="Overall Sold Products"
             desc="Number of sold per product"
             items={products.map((data) => data[1].title)}
             items2={products.map((data) => data[1].totalsold + ' items')}
@@ -191,9 +209,22 @@ const Dashboard = (props) => {
             items2={critical.map((data) => data.numberofitems + ' stock')}
           />{' '}
           <Rankings
-            title="Registered Users"
-            desc="Users registered in the website"
-            items={users.map((data) => data.name)}
+            title={
+              <>
+                Products for this{' '}
+                <select
+                  onChange={(e) => getProductSold(e.target.value, true, [null])}
+                >
+                  <option value="month">Month</option>
+                  <option value="custom">Day</option>
+                  <option value="week">Week</option>
+                  <option value="year">Year</option>
+                </select>
+              </>
+            }
+            desc="Products sold for this month"
+            items={fastMoving.map((data) => data.title)}
+            items2={fastMoving.map((data) => data.amount + ' items sold')}
           />
         </Row>
       </Content>

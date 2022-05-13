@@ -88,10 +88,22 @@ export const Table = (props) => {
                                 'No Image'
                               )
                             ) : key.toLowerCase().includes('date') ? (
-                              <>
-                                {new Date(data[1][key]).toDateString()}{' '}
-                                {new Date(data[1][key]).toLocaleTimeString()}
-                              </>
+                              (key === 'dateDelivered' &&
+                                data[1].status === 'Completed') ||
+                              key !== 'dateDelivered' ? (
+                                data[1][key] ? (
+                                  <>
+                                    {new Date(data[1][key]).toDateString()}{' '}
+                                    {new Date(
+                                      data[1][key]
+                                    ).toLocaleTimeString()}
+                                  </>
+                                ) : (
+                                  <>No date</>
+                                )
+                              ) : (
+                                <>Not yet delivered</>
+                              )
                             ) : key === 'addresses' ? (
                               <select style={{ width: '200px' }}>
                                 {data[1][key] ? (

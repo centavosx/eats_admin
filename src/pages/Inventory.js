@@ -790,6 +790,7 @@ const AdvanceProduct = (props) => {
   const [data, setData] = useState(null)
   const [first, setFirst] = useState(null)
   const [second, setSec] = useState(null)
+  const [search, setSearch] = useState('')
   React.useEffect(() => {
     if (data !== null) {
       setData(props.data.find((d) => d[0] === data[0]) ?? null)
@@ -803,6 +804,10 @@ const AdvanceProduct = (props) => {
         id2,
       },
     })
+  }
+  const searchD = (data) => {
+    if (data[1].title.toLowerCase().includes(search.toLowerCase())) return true
+    return false
   }
   const deleteAllDate = async (id) => {
     await axios.delete(process.env.REACT_APP_API + 'deleteAllDate', {
@@ -841,6 +846,12 @@ const AdvanceProduct = (props) => {
       name="Advance Order Dates"
       maxHeight="680px"
       edit={(v) => setData(v[1])}
+      nosubmit={true}
+      placeHolder="Search Product Name"
+      value={search}
+      inputText={true}
+      onChange={(v) => setSearch(v)}
+      searchVal={searchD}
       // delete={deleteItem}
       // edit={(v) => setEditProd(v)}
     />

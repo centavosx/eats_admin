@@ -24,6 +24,7 @@ const Inventories = () => {
   const [categoryN, setCategoryN] = useState('')
   const [supplierN, setSupplierN] = useState('')
   const [dataToExport, setDataToExport] = useState([])
+  const [search, setSearch] = useState('')
   const addSupplierOrCateg = async (what, data, val) => {
     await axios.post(process.env.REACT_APP_API + 'addsupplierorcategory', {
       wh: what,
@@ -196,6 +197,17 @@ const Inventories = () => {
     } catch {
       return alert('Failed')
     }
+  }
+
+  const searchD = (data) => {
+    if (
+      data[1].id.toLowerCase().includes(search.toLowerCase()) ||
+      data[1].title.toLowerCase().includes(search.toLowerCase()) ||
+      data[1].seller.toLowerCase().includes(search.toLowerCase()) ||
+      data[1].type.toLowerCase().includes(search.toLowerCase())
+    )
+      return true
+    return false
   }
   const deleteItem = async (id) => {
     try {
@@ -453,6 +465,12 @@ const Inventories = () => {
             maxHeight="680px"
             delete={deleteItem}
             edit={(v) => setEditProd(v)}
+            nosubmit={true}
+            placeHolder="Search Product id, name, supplier or type"
+            value={search}
+            inputText={true}
+            onChange={(v) => setSearch(v)}
+            searchVal={searchD}
           />
         </Row>
 

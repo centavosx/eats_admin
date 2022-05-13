@@ -28,6 +28,7 @@ const Users = (props) => {
       )
     }
   }, [data])
+
   const [search, setSearch] = useState('')
   React.useEffect(() => {
     getAccount()

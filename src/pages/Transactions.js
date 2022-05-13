@@ -8,11 +8,17 @@ const Transactions = () => {
   return (
     <div className="main-panel">
       <Content>
-        <RowTransaction key="1" what="transaction" name="Order Transactions" />
+        <RowTransaction
+          key="1"
+          what="transaction"
+          name="Order Transactions"
+          filename="Order Transactions"
+        />
         <RowTransaction
           key="2"
           what="reservation"
           name="Advance Order Transactions"
+          filename="Advance Order Transactions"
         />
       </Content>
     </div>
@@ -21,13 +27,48 @@ const Transactions = () => {
 const RowTransaction = (props) => {
   const [data, setData] = useState([])
   const [secondData, setSecondData] = useState([null, {}])
+  const [search, setSearch] = useState('')
+  const [dataToExport, setDataToExport] = useState([])
   React.useEffect(() => {
     getTransact()
     socket.on(props.what, (data) => {
       setData(data)
     })
   }, [])
-
+  React.useEffect(() => {
+    if (data.length > 0)
+      setDataToExport(
+        data.map((x) => {
+          return {
+            id: x[1].id,
+            uid: x[1].uid,
+            phone: x[1].phone.replaceAll(',', ' '),
+            address: x[1].address.replaceAll(',', ' '),
+            totalprice: 'Php' + x[1].totalprice,
+            payment: x[1].payment,
+            pstatus: x[1].pstatus,
+            dateBought: x[1].dateBought
+              ? new Date(x[1].dateBought).toDateString() +
+                ' ' +
+                new Date(x[1].dateBought).toLocaleTimeString()
+              : 'No date',
+            dateDelivered: x[1].dateDelivered
+              ? new Date(x[1].dateDelivered).toDateString() +
+                ' ' +
+                new Date(x[1].dateDelivered).toLocaleTimeString()
+              : 'No date',
+            datePaid: x[1].datePaid
+              ? new Date(x[1].datePaid).toDateString() +
+                ' ' +
+                new Date(x[1].datePaid).toLocaleTimeString()
+              : 'No date',
+            deliveryfee: 'Php' + (x[1].deliveryfee ? x[1].deliveryfee : 0),
+            status: x[1].status,
+            message: x[1].message?.replaceAll(',', ' ') ?? '',
+          }
+        })
+      )
+  }, [data])
   React.useEffect(() => {
     if (data.length > 0 && secondData[0] !== null) {
       setSecondData(data.find((d) => d[0] === secondData[0]) ?? [null, {}])
@@ -89,6 +130,19 @@ const RowTransaction = (props) => {
       })
     } catch {}
   }
+  const searchD = (data) => {
+    if (
+      data[1].id.toLowerCase().includes(search.toLowerCase()) ||
+      data[1].uid.toLowerCase().includes(search.toLowerCase()) ||
+      data[1].address.toLowerCase().includes(search.toLowerCase()) ||
+      data[1].phone.toLowerCase().includes(search.toLowerCase()) ||
+      data[1].status.toLowerCase().includes(search.toLowerCase()) ||
+      data[1].pstatus.toLowerCase().includes(search.toLowerCase()) ||
+      data[1].payment.toLowerCase().includes(search.toLowerCase())
+    )
+      return true
+    return false
+  }
   const changeItemStatus = async (index, transactionid, data, value) => {
     const oldstatus = data.status
     const newd = value
@@ -105,6 +159,40 @@ const RowTransaction = (props) => {
       {' '}
       {secondData[0] === null ? (
         <Table
+          csv={{
+            headers: [
+              'Order Id',
+              'User Id',
+              'Phone Number',
+              'Address',
+              'Total Price',
+              'Payment Mode',
+              'Date Created',
+              'Date Delivered',
+              'Date Paid',
+              'Delivery Fee',
+              'Status',
+              'Payment Status',
+              'Message',
+            ],
+            keyVals: [
+              'id',
+              'uid',
+              'phone',
+              'address',
+              'totalprice',
+              'payment',
+              'dateBought',
+              'dateDelivered',
+              'datePaid',
+              'deliveryfee',
+              'status',
+              'pstatus',
+              'message',
+            ],
+            data: dataToExport,
+            fileName: props.filename,
+          }}
           size="col-md-12"
           maxHeight="550px"
           headers={[
@@ -147,6 +235,12 @@ const RowTransaction = (props) => {
           changePStatus={(v) => updatePaymentStatus(v[0], v[1])}
           changeFee={(v) => setFee(v[0], v[1])}
           showItem={(v) => setSecondData(v)}
+          nosubmit={true}
+          placeHolder="Search Order Id, UserId, Address, Phone, Status, Payment Status or Payment mode"
+          value={search}
+          inputText={true}
+          onChange={(v) => setSearch(v)}
+          searchVal={searchD}
           // delete={deleteItem}
           // edit={(v) => setEditProd(v)}
         />

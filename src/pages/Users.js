@@ -14,13 +14,23 @@ const Users = (props) => {
             id: v[1].id,
             name: v[1].name,
             email: v[1].email,
-            phone: v[1].phone,
+            phone: v[1].phone?.replaceAll(',', ' ') ?? '',
             address: v[1].addresses
               ? Object.keys(v[1].addresses)
-                  .map((v2, i) => i + 1 + '. ' + v[1].addresses[v2].address)
+                  .map(
+                    (v2, i) =>
+                      i +
+                      1 +
+                      '. ' +
+                      v[1].addresses[v2].address.replaceAll(',', ' ')
+                  )
                   .join(' ')
               : '',
-            dateRegistered: v[1].dateCreated,
+            dateRegistered: v[1].dateCreated
+              ? new Date(v[1].dateCreated).toDateString() +
+                ' ' +
+                new Date(v[1].dateCreated).toLocaleTimeString()
+              : 'No date',
             verified: v[1].verified ? 'Yes' : 'No',
             spent: v[1].totalspent,
           }
@@ -67,7 +77,7 @@ const Users = (props) => {
                 'Email',
                 'Phone Number',
                 'Address',
-                'Date Registered',
+                'Registration Date',
                 'Verified',
                 'Spent',
               ],
@@ -100,7 +110,7 @@ const Users = (props) => {
               'Email',
               'Phone Number',
               'Address',
-              'Date Registered',
+              'Registration Date',
               'Verified',
               'Total Spent',
               'Actions',

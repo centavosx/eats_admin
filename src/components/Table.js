@@ -1,12 +1,12 @@
 import { CSVExport } from './ExportData'
 export const Table = (props) => {
   return (
-    <div className={props.size}>
+    <div className={props.size} onMouseEnter={() => props.hoverout(false)}>
       <div className="card">
         <div className="card-header">
           <h4 className="card-title">{props.name}</h4>
         </div>
-        <div className="card-body">
+        <div className="card-body" onMouseEnter={() => props.hoverout(false)}>
           {props.inputText ? (
             <>
               <label>{props.label}</label>
@@ -42,8 +42,9 @@ export const Table = (props) => {
           <div
             className="table-responsive"
             style={{ maxHeight: props.maxHeight, overflow: 'auto' }}
+            onMouseEnter={() => props.hoverout(false)}
           >
-            <table className="table">
+            <table className="table" onMouseEnter={() => props.hoverout(false)}>
               <thead className=" text-primary">
                 {props.headers.map((data, indexx) => (
                   <th key={indexx}>
@@ -51,7 +52,7 @@ export const Table = (props) => {
                   </th>
                 ))}
               </thead>
-              <tbody>
+              <tbody onMouseEnter={() => props.hoverout(false)}>
                 {props.data.map((data, i) =>
                   (props.searchVal ? props.searchVal(data) : true) ? (
                     <tr key={i}>
@@ -81,6 +82,7 @@ export const Table = (props) => {
                               key === 'receipt' ? (
                               data[1][key] ? (
                                 <img
+                                  onClick={() => props.hover(data[1][key])}
                                   src={data[1][key]}
                                   style={{ width: '140px', height: '80px' }}
                                 />

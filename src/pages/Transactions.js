@@ -5,20 +5,61 @@ import Content, { Row } from '../components/Content'
 import { Table } from '../components/Table'
 import socket from '../socket'
 const Transactions = () => {
+  const [show, setShow] = useState(false)
+  const [src, setSrc] = useState('')
   return (
-    <div className="main-panel">
+    <div className="main-panel" onMouseEnter={() => setShow(false)}>
       <Content>
+        {show ? (
+          <div
+            style={{
+              height: '85%',
+              width: '50vw',
+              border: '1px solid black',
+              backgroundColor: 'white',
+              position: 'fixed',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              left: 80,
+              right: 0,
+              textAlign: 'center',
+              zIndex: 10,
+              borderRadius: '10px',
+              padding: '10px',
+              overflow: 'auto',
+            }}
+          >
+            <button
+              onClick={() => setShow(false)}
+              style={{
+                marginBottom: '10px',
+                padding: '8px',
+                backgroundColor: 'red',
+                borderRadius: '10px',
+              }}
+            >
+              close
+            </button>
+            <br />
+            <img style={{ width: '100%' }} src={src} />
+          </div>
+        ) : null}
+
         <RowTransaction
           key="1"
           what="transaction"
           name="Order Transactions"
           filename="Order Transactions"
+          show={(v) => setShow(v)}
+          imagesource={(v) => setSrc(v)}
         />
         <RowTransaction
           key="2"
           what="reservation"
           name="Advance Order Transactions"
           filename="Advance Order Transactions"
+          show={(v) => setShow(v)}
+          imagesource={(v) => setSrc(v)}
         />
       </Content>
     </div>
@@ -159,6 +200,10 @@ const RowTransaction = (props) => {
       {' '}
       {secondData[0] === null ? (
         <Table
+          hover={(v) => {
+            props.show(true)
+            props.imagesource(v)
+          }}
           csv={{
             headers: [
               'Order Id',
@@ -241,12 +286,18 @@ const RowTransaction = (props) => {
           inputText={true}
           onChange={(v) => setSearch(v)}
           searchVal={searchD}
+
           // delete={deleteItem}
           // edit={(v) => setEditProd(v)}
         />
       ) : (
         <Table
           maxHeight="550px"
+          hover={(v) => {
+            props.show(true)
+            props.imagesource(v)
+          }}
+          hoverout={(v) => props.show(v)}
           name={
             <>
               Order <b>{secondData[1].id}</b>'s Items

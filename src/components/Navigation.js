@@ -107,17 +107,26 @@ export const LeftNavigation = (props) => {
 
 export const TopNav = (props) => {
   const [notif, setNotif] = useState([])
+  const [registered, setRegistered] = useState([])
   React.useEffect(() => {
     getCritical()
+    getNewRegistered()
     socket.on('criticalproducts', (data) => {
       setNotif(data)
     })
+    socket.on('newRegistered', (data) => setRegistered(data))
   }, [])
   const getCritical = async () => {
     const resp = await axios.get(
       process.env.REACT_APP_API + 'getCriticalProducts'
     )
     setNotif(resp.data)
+  }
+  const getNewRegistered = async () => {
+    const resp = await axios.get(
+      process.env.REACT_APP_API + 'getNewRegisteredAccounts'
+    )
+    setRegistered(resp.data?.newRegistered ?? [])
   }
   return (
     <nav className="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
@@ -179,6 +188,39 @@ export const TopNav = (props) => {
                 {notif.map((data) => (
                   <a className="dropdown-item" href="#">
                     {data.title} {data.numberofitems} items left
+                  </a>
+                ))}
+              </div>
+            </li>
+            <li className="nav-item btn-rotate dropdown">
+              <a
+                className="nav-link dropdown-toggle"
+                href="http://example.com"
+                id="navbarDropdownMenuLink"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <i className="nc-icon nc-single-02"></i>
+                <span style={{ marginRight: '5px', color: 'red' }}>
+                  {' '}
+                  {registered.length > 0 ? registered.length : null}
+                </span>
+                <p>
+                  <span className="d-lg-none d-md-block">Notifications</span>
+                </p>
+              </a>
+              <div
+                className="dropdown-menu dropdown-menu-right"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                {registered.map((data) => (
+                  <a className="dropdown-item" href="#">
+                    <span style={{ color: 'grey' }}>{data.id}</span>{' '}
+                    {data.name.length > 11
+                      ? data.name.substr(0, 11) + '...'
+                      : data.name}{' '}
+                    <span style={{ color: 'grey' }}>{data.email}</span>
                   </a>
                 ))}
               </div>

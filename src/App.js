@@ -13,6 +13,7 @@ import Chat from './pages/Chat'
 import Users from './pages/Users'
 import Transactions from './pages/Transactions'
 import Payment from './pages/Payment'
+import CancelOrders from './pages/CancelOrders'
 function App() {
   const loggedin = useSelector((state) => state.user.login)
   const [openNav, setOpenNav] = useState(false)
@@ -39,7 +40,9 @@ function App() {
             <Route path="/feedbacks" element={<Feedbacks />} />
             <Route path="/transactions" element={<Transactions />} />
             <Route path="/users" element={<Users />} />
+            <Route path="/CancelOrders" element={<CancelOrders />} />
             <Route path="/payment" element={<Payment />} />
+            
           </Routes>
         </div>
       </Router>

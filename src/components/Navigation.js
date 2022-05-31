@@ -79,6 +79,12 @@ export const LeftNavigation = (props) => {
               <p>Transactions</p>
             </Link>
           </li>
+          <li className={location.pathname == '/CancelOrders' ? 'active' : ''}>
+            <Link to="/cancelOrders" onClick={() => props.setOpenNav()}>
+              <i className="nc-icon nc-single-copy-04"></i>
+              <p>Cancel Order Requests</p>
+            </Link>
+          </li>
           <li className={location.pathname == '/inventories' ? 'active' : ''}>
             <Link to="/inventories" onClick={() => props.setOpenNav()}>
               <i className="nc-icon nc-app"></i>

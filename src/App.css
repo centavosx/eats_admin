@@ -41,7 +41,36 @@
   touch-action: manipulation;
   width: 100%;
 }
+.dropbtn {
+  background-color: transparent;
+  color: white;
+  padding: 16px;
+  font-weight: bold;
+  border: none;
+}
 
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
 .button-9:disabled {
   cursor: default;
 }

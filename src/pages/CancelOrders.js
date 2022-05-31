@@ -60,7 +60,14 @@ const CancelOrders = () => {
             <th>Payment Date</th>
             <th>Receipt</th>
             <th>Status</th>
-            <th>Reason</th>
+            <div class="dropdown">
+            <th class="dropbtn">Reason</th>
+            <div class="dropdown-content">
+            <a href="#">sort1</a>
+            <a href="#">sort2</a>
+            <a href="#">sort3</a>
+            </div>
+            </div>
             <th>Actions</th>
         </tr>
     </thead>
@@ -109,7 +116,14 @@ const CancelOrders = () => {
             <th>Payment Date</th>
             <th>Receipt</th>
             <th>Status</th>
-            <th>Reason</th>
+            <div class="dropdown">
+            <th class="dropbtn">Reason</th>
+            <div class="dropdown-content">
+            <a href="#">sort1</a>
+            <a href="#">sort2</a>
+            <a href="#">sort3</a>
+            </div>
+            </div>
             <th>Actions</th>
         </tr>
     </thead>

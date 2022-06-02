@@ -267,7 +267,7 @@ const CancelOrders = () => {
             maxHeight: '500px',
           }}
         >
-          <table class="styled-table">
+          <table class="styled-table" style={{ width: '100%' }}>
             <thead>
               <tr>
                 <th>Order ID</th>

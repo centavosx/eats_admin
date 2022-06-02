@@ -2,7 +2,6 @@ import axios from 'axios'
 
 import React, { useState } from 'react'
 import Content, { Row } from '../components/Content'
-import { Table } from '../components/Table'
 
 import socket from '../socket'
 const CancelOrders = () => {
@@ -94,7 +93,7 @@ const CancelOrders = () => {
             maxHeight: '500px',
           }}
         >
-          <table class="styled-table" style={{ width: '100%' }}>
+          <table className="styled-table" style={{ width: '100%' }}>
             <thead>
               <tr>
                 <th>Order ID</th>
@@ -106,9 +105,9 @@ const CancelOrders = () => {
                 <th>Payment Date</th>
                 <th>Receipt</th>
                 <th>Status</th>
-                <th class="dropdown">
-                  <th class="dropbtn">Reason</th>
-                  <div class="dropdown-content">
+                <th className="dropdown">
+                  <th className="dropbtn">Reason</th>
+                  <div className="dropdown-content">
                     <a
                       disabled=""
                       value={null}
@@ -220,7 +219,7 @@ const CancelOrders = () => {
                         <tr>
                           <th>
                             <button
-                              class="button-9"
+                              className="button-9 green"
                               role="button"
                               onClick={() =>
                                 updateData(
@@ -236,7 +235,7 @@ const CancelOrders = () => {
                           </th>
                           <th>
                             <button
-                              class="button-9"
+                              className="button-9 red"
                               role="button"
                               onClick={() =>
                                 updateData(
@@ -269,7 +268,7 @@ const CancelOrders = () => {
             maxHeight: '500px',
           }}
         >
-          <table class="styled-table" style={{ width: '100%' }}>
+          <table className="styled-table" style={{ width: '100%' }}>
             <thead>
               <tr>
                 <th>Order ID</th>
@@ -281,9 +280,9 @@ const CancelOrders = () => {
                 <th>Payment Date</th>
                 <th>Receipt</th>
                 <th>Status</th>
-                <th class="dropdown">
-                  <th class="dropbtn">Reason</th>
-                  <div class="dropdown-content">
+                <th className="dropdown">
+                  <th className="dropbtn">Reason</th>
+                  <div className="dropdown-content">
                     <a
                       disabled=""
                       value={null}
@@ -393,7 +392,7 @@ const CancelOrders = () => {
                         <tr>
                           <th>
                             <button
-                              class="button-9"
+                              className="button-9 green"
                               role="button"
                               onClick={() =>
                                 updateData(
@@ -409,7 +408,7 @@ const CancelOrders = () => {
                           </th>
                           <th>
                             <button
-                              class="button-9"
+                              className="button-9 red"
                               role="button"
                               onClick={() =>
                                 updateData(

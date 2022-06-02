@@ -209,7 +209,9 @@ const CancelOrders = () => {
                             setShow(true)
                           }}
                         />
-                      ) : null}
+                      ) : (
+                        'No picture'
+                      )}
                     </td>
                     <td>{data.val.status}</td>
                     <td>{data.val.reason}</td>
